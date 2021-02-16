@@ -1,32 +1,32 @@
 interface LabelEncoder {
-  labels: any[]
+  labels: unknown[];
 }
 
 class LabelEncoder {
-  constructor () {
-    this.labels = []
+  constructor() {
+    this.labels = [];
   }
 
-  fit (values: any[]): LabelEncoder {
-    const set = new Set(values)
-    this.labels = Array.from(set)
-    return this
+  fit(values: unknown[]): LabelEncoder {
+    const set = new Set(values);
+    this.labels = Array.from(set);
+    return this;
   }
 
-  transform (values: any[]): number[] {
+  transform(values: unknown[]): number[] {
     if (this.labels.length === 0) {
-      throw new Error('Must call fit before transforming values')
+      throw new Error('Must call fit before transforming values');
     }
-    return values.map(val => this.labels.indexOf(val))
+    return values.map((val) => this.labels.indexOf(val));
   }
 
-  fitTransform (values: any[]): any[] {
-    return this.fit(values).transform(values)
+  fitTransform(values: unknown[]): number[] {
+    return this.fit(values).transform(values);
   }
 
-  inverseTransform (values: number[]): any[] {
-    return values.map((index) => this.labels[index])
+  inverseTransform(values: number[]): unknown[] {
+    return values.map((index) => this.labels[index]);
   }
 }
 
-export default LabelEncoder
+export default LabelEncoder;
