@@ -1,18 +1,30 @@
 import LabelEncoder from '../LabelEncoder';
 
 describe('LabelEncoder', () => {
-  it('should transform the data', () => {
+  it('should transform a partial dataset', () => {
     const labelEncoder = new LabelEncoder();
-    const data = ['hello', 'world', 'hello', 'hello', 'world'];
+    const data = ['hello', 'world', 'hello', 'bob', 'world'];
+    labelEncoder.fit(data);
+    expect(labelEncoder.transform(['hello', 'bob'])).toEqual([0, 2]);
+  });
+  it('should transform the entire dataset', () => {
+    const labelEncoder = new LabelEncoder();
+    const data = ['hello', 'world', 'hello', 'bob', 'world'];
     const transformed = labelEncoder.fitTransform(data);
-    const result = [0, 1, 0, 0, 1];
+    const result = [0, 1, 0, 2, 1];
     expect(transformed).toEqual(result);
   });
-  it('should reverseTransform the data', () => {
+  it('should inverse transform a partial dataset', () => {
     const labelEncoder = new LabelEncoder();
-    const original = ['hello', 'world', 'hello', 'hello', 'world'];
+    const data = ['hello', 'world', 'hello', 'bob', 'world'];
+    labelEncoder.fit(data);
+    expect(labelEncoder.inverseTransform([2, 1])).toEqual(['bob', 'world']);
+  });
+  it('should inverse transform the entire dataset', () => {
+    const labelEncoder = new LabelEncoder();
+    const original = ['hello', 'world', 'hello', 'bob', 'world'];
     labelEncoder.fit(original);
-    const inversed = [0, 1, 0, 0, 1];
+    const inversed = [0, 1, 0, 2, 1];
     const inverseTransformed = labelEncoder.inverseTransform(inversed);
     expect(inverseTransformed).toEqual(original);
   });
