@@ -1,20 +1,20 @@
 interface OneHotEncoder {
-  labels: unknown[];
+  categories: unknown[];
 }
 class OneHotEncoder {
   constructor() {
-    this.labels = [];
+    this.categories = [];
   }
 
   fit(values: unknown[]): OneHotEncoder {
-    this.labels = Array.from(new Set(values));
+    this.categories = Array.from(new Set(values));
     return this;
   }
 
   transform(values: unknown[]): number[][] {
     return values.map((val) => {
-      const onesIndex = this.labels.indexOf(val);
-      const length = this.labels.length;
+      const onesIndex = this.categories.indexOf(val);
+      const length = this.categories.length;
       const oneHotArray = this._createOneHotArray(onesIndex, length);
       return oneHotArray;
     });
@@ -25,19 +25,9 @@ class OneHotEncoder {
   }
 
   inverseTransform(values: number[][]): unknown[] {
-    /*
-      [
-        [1, 0, 0],
-        [0, 1, 0],
-        [0, 1, 0],
-        [0, 0, 1]
-      ]
-    */
-    // labels: ['world', 'hello', 'bob']
-    // We want: ['world', 'hello', 'hello', 'bob']
     return values.map((oneHotArray) => {
       const index = oneHotArray.indexOf(1);
-      return this.labels[index];
+      return this.categories[index];
     });
   }
 

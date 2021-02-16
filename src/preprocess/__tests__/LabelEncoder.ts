@@ -1,6 +1,12 @@
 import LabelEncoder from '../LabelEncoder';
 
 describe('LabelEncoder', () => {
+  it('should have the correct categories', () => {
+    const labelEncoder = new LabelEncoder();
+    const data = ['hello', 'world', 'hello', 'bob', 'world'];
+    labelEncoder.fit(data);
+    expect(labelEncoder.categories).toEqual(['hello', 'world', 'bob']);
+  });
   it('should transform a partial dataset', () => {
     const labelEncoder = new LabelEncoder();
     const data = ['hello', 'world', 'hello', 'bob', 'world'];

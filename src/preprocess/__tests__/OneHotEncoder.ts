@@ -1,6 +1,12 @@
 import OneHotEncoder from '../OneHotEncoder';
 
 describe('OneHotEncoder', () => {
+  it('should have the correct categories', () => {
+    const oneHotEncoder = new OneHotEncoder();
+    const data = ['world', 'hello', 'hello', 'bob'];
+    oneHotEncoder.fit(data);
+    expect(oneHotEncoder.categories).toEqual(['world', 'hello', 'bob']);
+  });
   it('should transform a partial dataset', () => {
     const oneHotEncoder = new OneHotEncoder();
     const data = ['world', 'hello', 'hello', 'bob'];
