@@ -8,8 +8,7 @@ class LabelEncoder {
   }
 
   fit(values: unknown[]): LabelEncoder {
-    const set = new Set(values);
-    this.labels = Array.from(set);
+    this.labels = Array.from(new Set(values));
     return this;
   }
 
