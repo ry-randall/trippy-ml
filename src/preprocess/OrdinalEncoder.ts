@@ -14,6 +14,9 @@ class OrdinalEncoder {
   }
 
   transform(values: unknown[]): number[] {
+    if (this.categories.length === 0) {
+      throw new Error('Must call fit before transforming values');
+    }
     return values.map((val) => this.orderedCategories.indexOf(val));
   }
 

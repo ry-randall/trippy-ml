@@ -12,6 +12,9 @@ class OneHotEncoder {
   }
 
   transform(values: unknown[]): number[][] {
+    if (this.categories.length === 0) {
+      throw new Error('Must call fit before transforming values');
+    }
     return values.map((val) => {
       const onesIndex = this.categories.indexOf(val);
       const length = this.categories.length;
