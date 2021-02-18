@@ -14,9 +14,7 @@ class OrdinalEncoder {
   }
 
   transform(values: unknown[]): number[] {
-    if (this.categories.length === 0) {
-      throw new Error('Must call fit before transforming values');
-    }
+    this._assertFitCalled();
     return values.map((val) => this.orderedCategories.indexOf(val));
   }
 
@@ -25,7 +23,14 @@ class OrdinalEncoder {
   }
 
   inverseTransform(values: number[]): unknown[] {
+    this._assertFitCalled();
     return values.map((val) => this.orderedCategories[val]);
+  }
+
+  _assertFitCalled(): void {
+    if (this.categories.length === 0) {
+      throw new Error('Must call fit before transforming values');
+    }
   }
 }
 export default OrdinalEncoder;

@@ -18,12 +18,25 @@ class StandardScaler {
   }
 
   transform(values: number[]): number[] {
-    // LaTeX: x'=\frac{x -\overline{x}}{\sigma}
+    this._assertFitCalled();
+    // LaTeX: x'=\frac{x_i -\overline{x}}{\sigma}
     return values.map((val) => (val - this.mean) / this.standardDeviation);
+  }
+
+  inverseTransform(values: number[]): number[] {
+    this._assertFitCalled();
+    // LaTeX: x_i=x'\sigma+\overline{x}
+    return values.map((val) => val * this.standardDeviation + this.mean);
   }
 
   fitTransform(values: number[]): number[] {
     return this.fit(values).transform(values);
+  }
+
+  _assertFitCalled(): void {
+    if (!this.mean && !this.standardDeviation) {
+      throw new Error('Must call fit before transforming values');
+    }
   }
 }
 export default StandardScaler;

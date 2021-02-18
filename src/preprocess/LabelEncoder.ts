@@ -13,9 +13,7 @@ class LabelEncoder {
   }
 
   transform(values: unknown[]): number[] {
-    if (this.categories.length === 0) {
-      throw new Error('Must call fit before transforming values');
-    }
+    this._assertFitCalled();
     return values.map((val) => this.categories.indexOf(val));
   }
 
@@ -24,7 +22,14 @@ class LabelEncoder {
   }
 
   inverseTransform(values: number[]): unknown[] {
+    this._assertFitCalled();
     return values.map((index) => this.categories[index]);
+  }
+
+  _assertFitCalled(): void {
+    if (this.categories.length === 0) {
+      throw new Error('Must call fit before transforming values');
+    }
   }
 }
 

@@ -31,4 +31,16 @@ describe('StandardScaler', () => {
     const transformed = standardScaler.fitTransform([82, 93, 98, 89, 88]);
     expect(roundAll(transformed)).toEqual([-1.501, 0.563, 1.501, -0.188, -0.375]);
   });
+  it('should inverse transform a partial dataset', () => {
+    const standardScaler = new StandardScaler();
+    standardScaler.fit([82, 93, 98, 89, 88]);
+    const transformed = standardScaler.transform([82, 93]);
+    expect(standardScaler.inverseTransform(transformed)).toEqual([82, 93]);
+  });
+  it('should inverse transform the entire dataset', () => {
+    const standardScaler = new StandardScaler();
+    const original = [82, 93, 98, 89, 88];
+    const transformed = standardScaler.fitTransform(original);
+    expect(standardScaler.inverseTransform(transformed)).toEqual(original);
+  });
 });
